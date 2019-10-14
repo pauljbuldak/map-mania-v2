@@ -1,0 +1,88 @@
+/* 
+	Paul Buldak
+	CPSC-24700 Web and Distributed Programming
+	Sprint 4
+	Fall 2019
+*/
+
+/* Makes the map cover the whole window */
+#map {
+	height: 100%;
+}
+
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+/* Creates the modal */
+.modal {
+	display: none;
+	position: fixed;
+	padding-top: 100px;
+	z-index: 3;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+
+/* Changes the style of the text within the modal header */
+.modal-header-text {
+	padding-left: 30px;
+	color: white;
+}
+
+/* Creates the header for the modal with "Instructions" and the close button */
+.modal-header {
+	background-color: lightblue;
+	float: left;
+	width: 100%;
+}
+
+/* Changes the content within the modal */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	position: relative;
+	padding: 0;
+	padding-bottom: 50px;
+	outline: 0;
+	border: 1px solid #888;
+	width: 50%;
+	height: 40%;
+	box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+}
+
+/* Changes the style of the text within modal-content */
+.modal-text {
+	position: relative;
+	top: 5px;
+	left: 20px;
+	color: blue;
+}
+
+/* Close Button */
+.close {
+	color: #fefefe;
+	position: absolute;
+	right: 10px;
+	top: 8px;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+/* Changes the color of the close button on hover or focus */
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+
+
