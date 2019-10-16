@@ -15,20 +15,29 @@
 	<link rel="stylesheet" href="map-mania.css">
 </head>
 <body onload="showModal()">
-	<!--Creates the map and uses the api key to retrieve the map-->
-	<div id="map"></div>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz1a4hOSmTLQneqeEbhkgDWnWr_U1juHU&callback=initMap"></script>
-
 	<!--Creates the getting started popup when you enter the game-->
 	<div id="myModal" class="modal">
 		<div class="modal-content">
 			<header class="modal-header">
 				<h2 class="modal-header-text">Instructions</h2>
 				<!--Closes the instructions when the user clicks on the x-->
-				<span onclick="document.getElementById('myModal').style.display='none'" class="close">&times;</span>
+				<span onclick="document.getElementById('myModal').style.visibility = 'hidden'" class="close">&times;</span>
 			</header>
-			<p class="modal-text">Some text...</p>
+			<p class="modal-text">Rules of the game, Automatic win. You can click anywhere outside of this box to start the game.</p>
 		</div>
 	</div>
+
+	<h1>Paul's &quot;Top Ten&quot; Places I Like to and Would Like to Visit Game</h1>
+
+	Hint: <input id="hint-id" type="text" value="" size="120" disabled><br><br>
+    Score: <input id="score-id" type="text" value="" size="10" disabled><br><br>
+
+
+
+	<!--Creates the map and uses the api key to retrieve the map-->
+	<div id="myMapID"></div>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDz1a4hOSmTLQneqeEbhkgDWnWr_U1juHU&callback=initMap"></script>	
+
+	
 </body>
 </html>
