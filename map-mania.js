@@ -91,13 +91,13 @@ function updateMap() {
 
 // Brings up the instructions when the page loads
 function showModal() {
-	document.getElementById('myModal').style.visibility = 'visible';
+	document.getElementById('getting-started').style.visibility = 'visible';
 }
 
 // Closes the instructions when the user clicks outside the modal
 window.onclick = function(event) {
-  if (event.target == document.getElementById('myModal')) {
-    document.getElementById('myModal').style.visibility = 'hidden';
+  if (event.target == document.getElementById('getting-started')) {
+    document.getElementById('getting-started').style.visibility = 'hidden';
   }
 }
 
