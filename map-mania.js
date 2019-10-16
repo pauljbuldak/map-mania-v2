@@ -37,17 +37,10 @@ function initMap() {
     // Making a new location from the programming assignment - actual location is near Djibouti
     loc1 = new google.maps.LatLng(12.432, 43.234);
 
-    // Adding a marker for New Lenox, IL with an info window that says "New Lenox, IL"
-    //var marker = new google.maps.Marker({position:{lat:41.5120, lng:-87.9656}, map:gMap});
-    //var infoWindow = new google.maps.InfoWindow({content:'<h2>New Lenox, IL</h2>'});
-    //marker.addListener('click', function() {
-    //	infoWindow.open(gMap,marker)
-    //});
-
 
     // Adds a marker on all of the past locations that were found with 
     // an infoWindow with the name of the location
-    if(currentPlaceIndex >= 0) {
+    if(currentPlaceIndex >= -1) {
         for(var i = favoritePlaces.length-1; i > currentPlaceIndex; i--) {
             lat = favoritePlaces[i].coordinates.lat;
             lng = favoritePlaces[i].coordinates.lng;
@@ -62,8 +55,8 @@ function initMap() {
     }
     
 
-    SetScore();
-    SetHint("Hint 1");
+    setScore();
+    setHint("Hint 1");
 }
 
 function updateMap() {
@@ -96,12 +89,12 @@ function updateMap() {
         
         alert("Congrats! You found " + currentPlace.content + ", location number " + (currentPlaceIndex+1) + "!");
         score += 10;
-        SetScore();
-        currentPlaceIndex = currentPlaceIndex - 1;
-        currentPlace = favoritePlaces[currentPlaceIndex];
+        setScore();
         if(score == 100) {
             win();
         }
+        currentPlaceIndex = currentPlaceIndex - 1;
+        currentPlace = favoritePlaces[currentPlaceIndex];
         initMap();
     }
 }
@@ -118,14 +111,23 @@ window.onclick = function(event) {
   }
 }
 
-function SetHint(hint) {
+function setHint(hint) {
     document.getElementById("hint-id").value = hint;  
 }
 
-function SetScore() {
+function setScore() {
     document.getElementById("score-id").value = score; 
 }
 
 function win() {
     alert("You win");
+    document.getElementById("hint-id").value = "You've found all 10 locations!";
+}
+
+function automaticWin() {
+    score = 100;
+    setScore();
+    currentPlaceIndex = -1;
+    initMap();
+    win();
 }

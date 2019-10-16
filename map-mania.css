@@ -84,6 +84,7 @@ html, body {
 .modal-text {
 	color: black;
 	position: absolute;
+	padding-right: 9px;
 	top: 70px;
 	left: 20px;
 	font-family: verdana;
