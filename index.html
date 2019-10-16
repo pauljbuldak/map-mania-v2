@@ -14,20 +14,20 @@
 	<script src="map-mania.js"></script>
 	<link rel="stylesheet" href="map-mania.css">
 </head>
-<body onload="showModal()">
+<body onload="gettingStarted()">
 	<!--Creates the getting started popup when you enter the game-->
 	<div id="getting-started" class="modal">
 		<div class="modal-content">
 			<header class="modal-header">
-				<h2 class="modal-header-text">Instructions</h2>
+				<h2 class="modal-header-text">Getting Started</h2>
 				<!--Closes the instructions when the user clicks on the x-->
 				<span onclick="document.getElementById('getting-started').style.visibility = 'hidden'" class="close">&times;</span>
 			</header>
-			<p class="modal-text">Rules of the game, Automatic win. You can click anywhere outside of this box to start the game.</p>
+			<p class="modal-text">Rules of the game. You can automatically win by double clicking the word "Game" in the title. You can click the &times; button or anywhere outside of this box to start the game.</p>
 		</div>
 	</div>
 
-	<h1>Paul's &quot;Top Ten&quot; Places I Like to and Would Like to Visit Game</h1>
+	<h1>Paul's &quot;Top Ten&quot; Places I Like to and Would Like to Visit <span ondblclick="win()">Game</span></h1>
 
 	Hint: <input id="hint-id" type="text" value="" size="120" disabled><br><br>
     Score: <input id="score-id" type="text" value="" size="10" disabled><br><br>

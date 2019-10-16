@@ -83,8 +83,8 @@ html, body {
 /* Changes the style of the text within modal-content */
 .modal-text {
 	color: black;
-	position: relative;
-	top: 10px;
+	position: absolute;
+	top: 70px;
 	left: 20px;
 	font-family: verdana;
 }

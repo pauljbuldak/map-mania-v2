@@ -83,15 +83,15 @@ function updateMap() {
         alert("Congrats! You found location number " + (currentPlaceIndex+1));
         score += 10;
         SetScore();
-        currentPlaceIndex--;
-        if(currentPlaceIndex == -1) {
-            alert("Congrats! You found all of the locations and won the game!");
+        currentPlaceIndex = currentPlaceIndex - 1;
+        if(score == 100) {
+            win();
         }
     }
 }
 
 // Brings up the instructions when the page loads
-function showModal() {
+function gettingStarted() {
 	document.getElementById('getting-started').style.visibility = 'visible';
 }
 
@@ -110,3 +110,6 @@ function SetScore() {
     document.getElementById("score-id").value = score; 
 }
 
+function win() {
+    alert("You win");
+}
