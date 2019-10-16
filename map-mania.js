@@ -44,6 +44,24 @@ function initMap() {
     //	infoWindow.open(gMap,marker)
     //});
 
+
+    // Adds a marker on all of the past locations that were found with 
+    // an infoWindow with the name of the location
+    if(currentPlaceIndex >= 0) {
+        for(var i = favoritePlaces.length-1; i > currentPlaceIndex; i--) {
+            lat = favoritePlaces[i].coordinates.lat;
+            lng = favoritePlaces[i].coordinates.lng;
+            latlng = new google.maps.LatLng(lat, lng);
+            locContent = favoritePlaces[i].content;
+            var marker = new google.maps.Marker({position:latlng, map:gMap});
+            var infoWindow = new google.maps.InfoWindow({content:locContent});
+            marker.addListener('click', function() {
+                infoWindow.open(gMap,marker)
+            });
+        }
+    }
+    
+
     SetScore();
     SetHint("Hint 1");
 }
@@ -56,8 +74,8 @@ function updateMap() {
     var lng = currentPlace.coordinates.lng;
     console.log("lng " + lng);
     var latlng = new google.maps.LatLng(lat, lng);
-    var contentPlace = currentPlace.content;
-    console.log("contentPlace " + contentPlace);
+    var locContent = currentPlace.content;
+    console.log("locContent " + locContent);
 
 	// Gets the zoom level of the map
 	var zoomLevel = gMap.getZoom()
@@ -73,20 +91,18 @@ function updateMap() {
 	// Writes to the console the boolean of if it is in the bounds and what the zoom level is
 	console.log("inBounds:" + inBounds + " zoomLevel:" + zoomLevel);
 
-    if(inBounds && zoomLevel > 8) {
-        console.log("Found currentPlace");
-        var marker = new google.maps.Marker({position:latlng, map:gMap});
-        var infoWindow = new google.maps.InfoWindow({content:contentPlace});
-        marker.addListener('click', function() {
-            infoWindow.open(gMap,marker)
-        });
-        alert("Congrats! You found location number " + (currentPlaceIndex+1));
+    if(inBounds && zoomLevel >= 8) {
+        console.log("Found loc number " + (currentPlaceIndex+1));
+        
+        alert("Congrats! You found " + currentPlace.content + ", location number " + (currentPlaceIndex+1) + "!");
         score += 10;
         SetScore();
         currentPlaceIndex = currentPlaceIndex - 1;
+        currentPlace = favoritePlaces[currentPlaceIndex];
         if(score == 100) {
             win();
         }
+        initMap();
     }
 }
 
