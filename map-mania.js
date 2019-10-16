@@ -25,11 +25,11 @@ var score = 0;
 
 function initMap() {
 	// Creates the map
-	gMap = new google.maps.Map(document.getElementById('myMapID'), {
-  		center: {lat: 37.0902, lng: -95.7129}, zoom: 4});
+	gMap = new google.maps.Map(document.getElementById("myMapID"), {
+  		center: {"lat": 37.0902, "lng": -95.7129}, "zoom": 4});
 
 	// Calls update map whenever the user stops moving
-    google.maps.event.addListener(gMap, 'idle', function() {
+    google.maps.event.addListener(gMap, "idle", function() {
     	updateMap()
     });
 
@@ -45,9 +45,9 @@ function initMap() {
             lng = favoritePlaces[i].coordinates.lng;
             latlng = new google.maps.LatLng(lat, lng);
             locContent = favoritePlaces[i].content;
-            var marker = new google.maps.Marker({position:latlng, map:gMap});
-            var infoWindow = new google.maps.InfoWindow({content:locContent});
-            marker.addListener('click', function() {
+            var marker = new google.maps.Marker({"position":latlng, "map":gMap});
+            var infoWindow = new google.maps.InfoWindow({"content":locContent});
+            marker.addListener("click", function() {
                 infoWindow.open(gMap,marker)
             });
         }
@@ -59,7 +59,7 @@ function initMap() {
 }
 
 function updateMap() {
-	console.log('updateMap()');
+	console.log("updateMap()");
     
     var lat = currentPlace.coordinates.lat;
     var lng = currentPlace.coordinates.lng;
@@ -89,6 +89,7 @@ function updateMap() {
             score += 10;
             setScore();
             // setHint(currentPlace.hint);
+            // if inbounds then zoom in, else go north, east, south, west
             if(score == 100) {
                 win();
             }
@@ -101,13 +102,13 @@ function updateMap() {
 
 // Brings up the instructions when the page loads
 function gettingStarted() {
-	document.getElementById('getting-started').style.visibility = 'visible';
+	document.getElementById("getting-started").style.visibility = "visible";
 }
 
 // Closes the instructions when the user clicks outside the modal
 window.onclick = function(event) {
-  if (event.target == document.getElementById('getting-started')) {
-    document.getElementById('getting-started').style.visibility = 'hidden';
+  if (event.target == document.getElementById("getting-started")) {
+    document.getElementById("getting-started").style.visibility = "hidden";
   }
 }
 
