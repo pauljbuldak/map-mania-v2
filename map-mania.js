@@ -19,7 +19,6 @@ var favoritePlaces = [
     {"content":"London, England", "coordinates":{"lat":51.5074,"lng":0.1278}, "iconImagePath":"flag.png"},
     {"content":"Door County, WI", "coordinates":{"lat":44.8341,"lng":-87.3770}, "iconImagePath":"flag.png"}
 ];
-
 var currentPlaceIndex = favoritePlaces.length-1;
 var currentPlace = favoritePlaces[currentPlaceIndex];
 var score = 0;
@@ -63,10 +62,9 @@ function updateMap() {
 	console.log('updateMap()');
     
     var lat = currentPlace.coordinates.lat;
-    console.log("lat " + lat);
     var lng = currentPlace.coordinates.lng;
-    console.log("lng " + lng);
     var latlng = new google.maps.LatLng(lat, lng);
+    console.log("latlng " + latlng);
     var locContent = currentPlace.content;
     console.log("locContent " + locContent);
 
@@ -83,20 +81,22 @@ function updateMap() {
 
 	// Writes to the console the boolean of if it is in the bounds and what the zoom level is
 	console.log("inBounds:" + inBounds + " zoomLevel:" + zoomLevel);
-
-    if(inBounds && zoomLevel >= 8) {
-        console.log("Found loc number " + (currentPlaceIndex+1));
-        
-        alert("Congrats! You found " + currentPlace.content + ", location number " + (currentPlaceIndex+1) + "!");
-        score += 10;
-        setScore();
-        if(score == 100) {
-            win();
+    if(currentPlaceIndex > -1) {
+        if(inBounds && zoomLevel >= 8) {
+            console.log("Found loc number " + (currentPlaceIndex+1));
+            
+            alert("Congrats! You found " + currentPlace.content + ", location number " + (currentPlaceIndex+1) + "!");
+            score += 10;
+            setScore();
+            // setHint(currentPlace.hint);
+            if(score == 100) {
+                win();
+            }
+            currentPlaceIndex = currentPlaceIndex - 1;
+            currentPlace = favoritePlaces[currentPlaceIndex];
+            initMap();
         }
-        currentPlaceIndex = currentPlaceIndex - 1;
-        currentPlace = favoritePlaces[currentPlaceIndex];
-        initMap();
-    }
+    }    
 }
 
 // Brings up the instructions when the page loads
@@ -111,19 +111,24 @@ window.onclick = function(event) {
   }
 }
 
+// Sets the hint input field
 function setHint(hint) {
     document.getElementById("hint-id").value = hint;  
 }
 
+// Sets the score input field
 function setScore() {
     document.getElementById("score-id").value = score; 
 }
 
+// Lets the user know that they won
 function win() {
     alert("You win");
     document.getElementById("hint-id").value = "You've found all 10 locations!";
 }
 
+// Lets the user automatically win, this is called when the user double clicks
+// on "Game" in the title
 function automaticWin() {
     score = 100;
     setScore();
