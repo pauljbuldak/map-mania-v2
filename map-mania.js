@@ -19,6 +19,7 @@ var favoritePlaces = [
     {"content":"London, England", "coordinates":{"lat":51.5074,"lng":0.1278}, "iconImagePath":"flag.png"},
     {"content":"Door County, WI", "coordinates":{"lat":44.8341,"lng":-87.3770}, "iconImagePath":"flag.png"}
 ];
+
 var currentPlaceIndex = favoritePlaces.length-1;
 var currentPlace = favoritePlaces[currentPlaceIndex];
 var score = 0;

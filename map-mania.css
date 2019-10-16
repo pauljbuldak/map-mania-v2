@@ -49,6 +49,7 @@ html, body {
 
 /* Close Button */
 .close {
+	z-index: 2;
 	color: #fefefe;
 	position: absolute;
 	right: 20px;
