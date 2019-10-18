@@ -9,14 +9,14 @@ var gMap;
 var loc1;
 var favoritePlaces = [
     {"content":"New Lenox, IL", "coordinates":{"lat":41.5120,"lng":-87.9656}, "iconImagePath":"one.png"},
+    {"content":"Seattle, WA", "coordinates":{"lat":47.6062,"lng":-122.3321}, "iconImagePath":"flag.png"},
     {"content":"Kyoto, Japan", "coordinates":{"lat":35.0116,"lng":135.7681}, "iconImagePath":"flag.png"},
     {"content":"Bloomington, IL", "coordinates":{"lat":40.4842,"lng":-88.9937}, "iconImagePath":"flag.png"},
     {"content":"Paris, France", "coordinates":{"lat":48.8566,"lng":2.3522}, "iconImagePath":"two.png"},
-    {"content":"Hakone, Japan", "coordinates":{"lat":35.2324,"lng":139.1069}, "iconImagePath":"flag.png"},
+    {"content":"San Francisco, CA", "coordinates":{"lat":37.7749,"lng":-122.4194}, "iconImagePath":"flag.png"},
     {"content":"Duluth, MN", "coordinates":{"lat":46.7867,"lng":-92.1005}, "iconImagePath":"flag.png"},
     {"content":"Rome, Italy", "coordinates":{"lat":41.9028,"lng":12.4964}, "iconImagePath":"flag.png"},
     {"content":"Mackinac Island, MI", "coordinates":{"lat":45.8492,"lng":-84.6189}, "iconImagePath":"flag.png"},
-    {"content":"London, England", "coordinates":{"lat":51.5074,"lng":0.1278}, "iconImagePath":"flag.png"},
     {"content":"Door County, WI", "coordinates":{"lat":44.8341,"lng":-87.3770}, "iconImagePath":"flag.png"}
 ];
 var currentPlaceIndex = favoritePlaces.length-1;
@@ -41,9 +41,7 @@ function initMap() {
     // an infoWindow with the name of the location
     if(currentPlaceIndex >= -1) {
         for(var i = favoritePlaces.length-1; i > currentPlaceIndex; i--) {
-            lat = favoritePlaces[i].coordinates.lat;
-            lng = favoritePlaces[i].coordinates.lng;
-            latlng = new google.maps.LatLng(lat, lng);
+            latlng = new google.maps.LatLng(favoritePlaces[i].coordinates);
             locContent = favoritePlaces[i].content;
             var marker = new google.maps.Marker({"position":latlng, "map":gMap});
             var infoWindow = new google.maps.InfoWindow({"content":locContent});
@@ -55,18 +53,14 @@ function initMap() {
     
 
     setScore();
-    setHint("Hint 1");
+    setHint("Welcome to the game");
 }
 
 function updateMap() {
 	console.log("updateMap()");
     
-    var lat = currentPlace.coordinates.lat;
-    var lng = currentPlace.coordinates.lng;
-    var latlng = new google.maps.LatLng(lat, lng);
-    console.log("latlng " + latlng);
+    var latlng = new google.maps.LatLng(currentPlace.coordinates);
     var locContent = currentPlace.content;
-    console.log("locContent " + locContent);
 
 	// Gets the zoom level of the map
 	var zoomLevel = gMap.getZoom()
@@ -79,17 +73,51 @@ function updateMap() {
 		inBounds = true;
 	}
 
+    // Sets the hint if the location is in the bounds and tells the user to zoom in
+    if(inBounds && zoomLevel < 8) {
+        if(zoomLevel == 7) {
+            setHint("You're on fire");
+        } else if(zoomLevel == 6) {
+            setHint("You're really close, zoom in");
+        } else if(zoomLevel == 5) {
+            setHint("Keep on zoomin");
+        } else if(zoomLevel == 4) {
+            setHint("You are getting closer, zoom in");
+        } else if(zoomLevel == 3) {
+            setHint("Keep on zoomin");
+        } else if(zoomLevel == 2) {
+            setHint("You are getting there, zoom in");
+        }
+    }
+
+    var boundsN = gMap.getBounds().getNorthEast().lat();
+    var boundsE = gMap.getBounds().getNorthEast().lng();
+    var boundsS = gMap.getBounds().getSouthWest().lat();
+    var boundsW = gMap.getBounds().getSouthWest().lng();
+    // Sets the hints if the location is not wihtin the bounds
+    if(currentPlace.coordinates.lng > boundsE) {
+        setHint("Go East");
+    } else if(currentPlace.coordinates.lng < boundsW) {
+        setHint("Go West");
+    } else if(currentPlace.coordinates.lat > boundsN) {
+        setHint("Go North");
+    } else if(currentPlace.coordinates.lat < boundsS) {
+        setHint("Go South");
+    } 
+
 	// Writes to the console the boolean of if it is in the bounds and what the zoom level is
 	console.log("inBounds:" + inBounds + " zoomLevel:" + zoomLevel);
     if(currentPlaceIndex > -1) {
         if(inBounds && zoomLevel >= 8) {
             console.log("Found loc number " + (currentPlaceIndex+1));
             
-            alert("Congrats! You found " + currentPlace.content + ", location number " + (currentPlaceIndex+1) + "!");
+            document.getElementById("header-text").innerHTML = "Congrats";
+            document.getElementById("body-text").innerHTML = "Congrats! You found " + currentPlace.content + ", location number " 
+            + (currentPlaceIndex+1) + "! <br><br>You can click the &times; button or anywhere outside of this box to continue." ;
+            showModal();
             score += 10;
             setScore();
-            // setHint(currentPlace.hint);
-            // if inbounds then zoom in, else go north, east, south, west
+            
             if(score == 100) {
                 win();
             }
@@ -100,15 +128,15 @@ function updateMap() {
     }    
 }
 
-// Brings up the instructions when the page loads
-function gettingStarted() {
-	document.getElementById("getting-started").style.visibility = "visible";
+// Makes the modal visible
+function showModal() {
+	document.getElementById("my-modal").style.visibility = "visible";
 }
 
-// Closes the instructions when the user clicks outside the modal
+// Closes the modal when the user clicks outside of it
 window.onclick = function(event) {
-  if (event.target == document.getElementById("getting-started")) {
-    document.getElementById("getting-started").style.visibility = "hidden";
+  if (event.target == document.getElementById("my-modal")) {
+    document.getElementById("my-modal").style.visibility = "hidden";
   }
 }
 
@@ -124,7 +152,10 @@ function setScore() {
 
 // Lets the user know that they won
 function win() {
-    alert("You win");
+    document.getElementById("header-text").innerHTML = "You Won!";
+    document.getElementById("body-text").innerHTML = "Congrats! You found all 10 locations! You can now view all of the locations. " 
+        + "Thanks for playing! <br><br>You can click the &times; button or anywhere outside of this box to continue." ;
+    showModal();
     document.getElementById("hint-id").value = "You've found all 10 locations!";
 }
 
