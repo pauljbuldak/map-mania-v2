@@ -41,13 +41,7 @@ function initMap() {
     // an infoWindow with the name of the location
     if(currentPlaceIndex >= -1) {
         for(var i = favoritePlaces.length-1; i > currentPlaceIndex; i--) {
-            latlng = new google.maps.LatLng(favoritePlaces[i].coordinates);
-            locContent = favoritePlaces[i].content;
-            var marker = new google.maps.Marker({"position":latlng, "map":gMap});
-            var infoWindow = new google.maps.InfoWindow({"content":locContent});
-            marker.addListener("click", function() {
-                infoWindow.open(gMap,marker)
-            });
+            AddMarker(favoritePlaces[i]);
         }
     }
     
@@ -59,6 +53,7 @@ function initMap() {
 function updateMap() {
 	console.log("updateMap()");
     
+    // Creating a variable for the lat, lng and one for the content within them
     var latlng = new google.maps.LatLng(currentPlace.coordinates);
     var locContent = currentPlace.content;
 
@@ -168,3 +163,23 @@ function automaticWin() {
     initMap();
     win();
 }
+
+function AddMarker(markerProperties) {
+    var marker = new google.maps.Marker({"position":markerProperties.coordinates, "map":gMap});
+
+    // Check if there is a custom icon image.
+    //if (markerProperties.iconImagePath) {
+        // Set custum icon image.
+    //    marker.setIcon(markerProperties.iconImagePath);
+    //}
+
+    // Check if there is content and create a listener if content exists.
+    if (markerProperties.content) {
+        var infoWindow = new google.maps.InfoWindow({"content":markerProperties.content});
+
+        marker.addListener('click', function() {
+            infoWindow.open(gMap, marker);
+        });
+    }
+}
+
