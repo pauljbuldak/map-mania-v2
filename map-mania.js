@@ -8,16 +8,16 @@
 var gMap;
 var loc1;
 var favoritePlaces = [
-    {"content":"New Lenox, IL", "coordinates":{"lat":41.5120,"lng":-87.9656}, "iconImagePath":"one.png"},
-    {"content":"Seattle, WA", "coordinates":{"lat":47.6062,"lng":-122.3321}, "iconImagePath":"flag.png"},
-    {"content":"Kyoto, Japan", "coordinates":{"lat":35.0116,"lng":135.7681}, "iconImagePath":"flag.png"},
-    {"content":"Bloomington, IL", "coordinates":{"lat":40.4842,"lng":-88.9937}, "iconImagePath":"flag.png"},
-    {"content":"Paris, France", "coordinates":{"lat":48.8566,"lng":2.3522}, "iconImagePath":"two.png"},
-    {"content":"San Francisco, CA", "coordinates":{"lat":37.7749,"lng":-122.4194}, "iconImagePath":"flag.png"},
-    {"content":"Duluth, MN", "coordinates":{"lat":46.7867,"lng":-92.1005}, "iconImagePath":"flag.png"},
-    {"content":"Rome, Italy", "coordinates":{"lat":41.9028,"lng":12.4964}, "iconImagePath":"flag.png"},
-    {"content":"Mackinac Island, MI", "coordinates":{"lat":45.8492,"lng":-84.6189}, "iconImagePath":"flag.png"},
-    {"content":"Door County, WI", "coordinates":{"lat":44.8341,"lng":-87.3770}, "iconImagePath":"flag.png"}
+    {"content":"New Lenox, IL", "coordinates":{"lat":41.5120,"lng":-87.9656}, "iconImagePath":"ltblue-dot.png"},
+    {"content":"Seattle, WA", "coordinates":{"lat":47.6062,"lng":-122.3321}, "iconImagePath":"ltblue-dot.png"},
+    {"content":"Kyoto, Japan", "coordinates":{"lat":35.0116,"lng":135.7681}, "iconImagePath":"ltblue-dot.png"},
+    {"content":"Bloomington, IL", "coordinates":{"lat":40.4842,"lng":-88.9937}, "iconImagePath":"ltblue-dot.png"},
+    {"content":"Paris, France", "coordinates":{"lat":48.8566,"lng":2.3522}, "iconImagePath":"ltblue-dot.png"},
+    {"content":"San Francisco, CA", "coordinates":{"lat":37.7749,"lng":-122.4194}, "iconImagePath":"ltblue-dot.png"},
+    {"content":"Duluth, MN", "coordinates":{"lat":46.7867,"lng":-92.1005}, "iconImagePath":"ltblue-dot.png"},
+    {"content":"Rome, Italy", "coordinates":{"lat":41.9028,"lng":12.4964}, "iconImagePath":"ltblue-dot.png"},
+    {"content":"Mackinac Island, MI", "coordinates":{"lat":45.8492,"lng":-84.6189}, "iconImagePath":"ltblue-dot.png"},
+    {"content":"Door County, WI", "coordinates":{"lat":44.8341,"lng":-87.3770}, "iconImagePath":"ltblue-dot.png"}
 ];
 var currentPlaceIndex = favoritePlaces.length-1;
 var currentPlace = favoritePlaces[currentPlaceIndex];
@@ -47,7 +47,7 @@ function initMap() {
     
 
     setScore();
-    setHint("Welcome to the game");
+    setHint("");
 }
 
 function updateMap() {
@@ -89,6 +89,9 @@ function updateMap() {
     var boundsE = gMap.getBounds().getNorthEast().lng();
     var boundsS = gMap.getBounds().getSouthWest().lat();
     var boundsW = gMap.getBounds().getSouthWest().lng();
+    
+    
+
     // Sets the hints if the location is not wihtin the bounds
     if(currentPlace.coordinates.lng > boundsE) {
         setHint("Go East");
@@ -168,10 +171,10 @@ function AddMarker(markerProperties) {
     var marker = new google.maps.Marker({"position":markerProperties.coordinates, "map":gMap});
 
     // Check if there is a custom icon image.
-    //if (markerProperties.iconImagePath) {
+    if (markerProperties.iconImagePath) {
         // Set custum icon image.
-    //    marker.setIcon(markerProperties.iconImagePath);
-    //}
+        marker.setIcon(markerProperties.iconImagePath);
+    }
 
     // Check if there is content and create a listener if content exists.
     if (markerProperties.content) {
