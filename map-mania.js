@@ -175,7 +175,7 @@ function AddMarker(markerProperties) {
 
     // Check if there is a custom icon image.
     if (markerProperties.iconImagePath) {
-        // Set custum icon image.
+        // Set custom icon image.
         marker.setIcon(markerProperties.iconImagePath);
     }
 
