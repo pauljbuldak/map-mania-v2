@@ -107,6 +107,7 @@ function updateMap() {
 
 	// Writes to the console the boolean of if it is in the bounds and what the zoom level is
 	console.log("inBounds:" + inBounds + " zoomLevel:" + zoomLevel);
+    
     if(currentPlaceIndex > -1) {
         if(inBounds && zoomLevel >= 8) {
             console.log("Found loc number " + (currentPlaceIndex+1));
