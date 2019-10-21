@@ -111,18 +111,24 @@ function updateMap() {
         if(inBounds && zoomLevel >= 8) {
             console.log("Found loc number " + (currentPlaceIndex+1));
             
+            // Brings up the modal after each location is found
             document.getElementById("header-text").innerHTML = "Congrats";
             document.getElementById("body-text").innerHTML = "Congrats! You found " + currentPlace.content + ", location number " 
             + (currentPlaceIndex+1) + "! <br><br>You can click the &times; button or anywhere outside of this box to continue." ;
             showModal();
+
+            // Adds to the score and checks if the user has won
             score += 10;
             setScore();
-            
             if(score == 100) {
                 win();
             }
+
+            // Sets the current place index to the next place and gets the information for it
             currentPlaceIndex = currentPlaceIndex - 1;
             currentPlace = favoritePlaces[currentPlaceIndex];
+
+            // Resets the map to the center
             initMap();
         }
     }    
