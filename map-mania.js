@@ -166,7 +166,7 @@ function win() {
 }
 
 // Lets the user automatically win, this is called when the user double clicks
-// on "Game" in the title
+// on the word "Game" in the title
 function automaticWin() {
     score = 100;
     setScore();
