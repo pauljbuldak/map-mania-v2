@@ -68,39 +68,42 @@ function updateMap() {
 		inBounds = true;
 	}
 
-    // Sets the hint if the location is in the bounds and tells the user to zoom in
-    if(inBounds && zoomLevel < 8) {
-        if(zoomLevel == 7) {
-            setHint("You're on fire");
-        } else if(zoomLevel == 6) {
-            setHint("You're really close, zoom in");
-        } else if(zoomLevel == 5) {
-            setHint("Keep on zoomin");
-        } else if(zoomLevel == 4) {
-            setHint("You are getting closer, zoom in");
-        } else if(zoomLevel == 3) {
-            setHint("Keep on zoomin");
-        } else if(zoomLevel == 2) {
-            setHint("You are getting there, zoom in");
+    if(score < 100) {
+        // Sets the hint if the location is in the bounds and tells the user to zoom in
+        if(inBounds && zoomLevel < 8) {
+            if(zoomLevel == 7) {
+                setHint("You're on fire");
+            } else if(zoomLevel == 6) {
+                setHint("You're really close, zoom in");
+            } else if(zoomLevel == 5) {
+                setHint("Keep on zoomin");
+            } else if(zoomLevel == 4) {
+                setHint("You are getting closer, zoom in");
+            } else if(zoomLevel == 3) {
+                setHint("Keep on zoomin");
+            } else if(zoomLevel == 2) {
+                setHint("You are getting there, zoom in");
+            }
         }
+
+        // Gets the each of the bound coordinates
+        var boundsN = gMap.getBounds().getNorthEast().lat();
+        var boundsE = gMap.getBounds().getNorthEast().lng();
+        var boundsS = gMap.getBounds().getSouthWest().lat();
+        var boundsW = gMap.getBounds().getSouthWest().lng();
+
+        // Sets the hints if the location is not wihtin the bounds
+        if(currentPlace.coordinates.lng > boundsE) {
+            setHint("Go East");
+        } else if(currentPlace.coordinates.lng < boundsW) {
+            setHint("Go West");
+        } else if(currentPlace.coordinates.lat > boundsN) {
+            setHint("Go North");
+        } else if(currentPlace.coordinates.lat < boundsS) {
+            setHint("Go South");
+        } 
     }
-
-    // Gets the each of the bound coordinates
-    var boundsN = gMap.getBounds().getNorthEast().lat();
-    var boundsE = gMap.getBounds().getNorthEast().lng();
-    var boundsS = gMap.getBounds().getSouthWest().lat();
-    var boundsW = gMap.getBounds().getSouthWest().lng();
-
-    // Sets the hints if the location is not wihtin the bounds
-    if(currentPlace.coordinates.lng > boundsE) {
-        setHint("Go East");
-    } else if(currentPlace.coordinates.lng < boundsW) {
-        setHint("Go West");
-    } else if(currentPlace.coordinates.lat > boundsN) {
-        setHint("Go North");
-    } else if(currentPlace.coordinates.lat < boundsS) {
-        setHint("Go South");
-    } 
+    
 
 	// Writes to the console the boolean of if it is in the bounds and what the zoom level is
 	console.log("inBounds:" + inBounds + " zoomLevel:" + zoomLevel);
@@ -153,7 +156,7 @@ function win() {
     document.getElementById("body-text").innerHTML = "Congrats! You found all 10 locations! You can now view all of the locations. " 
         + "Thanks for playing! <br><br>You can click the &times; button or anywhere outside of this box to continue." ;
     showModal();
-    document.getElementById("hint-id").value = "You've found all 10 locations!";
+    setHint("Congrats, you've found all 10 locations!");
 }
 
 // Lets the user automatically win, this is called when the user double clicks
