@@ -45,7 +45,7 @@ function initMap() {
         }
     }
     
-
+    // Initializes the score and hint fields
     setScore();
     setHint("");
 }
@@ -85,12 +85,11 @@ function updateMap() {
         }
     }
 
+    // Gets the each of the bound coordinates
     var boundsN = gMap.getBounds().getNorthEast().lat();
     var boundsE = gMap.getBounds().getNorthEast().lng();
     var boundsS = gMap.getBounds().getSouthWest().lat();
     var boundsW = gMap.getBounds().getSouthWest().lng();
-    
-    
 
     // Sets the hints if the location is not wihtin the bounds
     if(currentPlace.coordinates.lng > boundsE) {
@@ -167,6 +166,7 @@ function automaticWin() {
     win();
 }
 
+// Creates a marker that has a special icon and an info window
 function AddMarker(markerProperties) {
     var marker = new google.maps.Marker({"position":markerProperties.coordinates, "map":gMap});
 
